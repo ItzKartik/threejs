@@ -3,19 +3,26 @@
         {
             "name": "White",
             "hex_code": "0xffffff"
+        },
+        {
+            "name": "Black",
+            "hex_code": "0x000000"
         }
     ],
     "interior": [
         {
             "img_name": "5.jpeg"
+        },
+        {
+            "img_name": "get your logo designed professionally.png"
         }
     ],
     "exterior": [
         {
-            "img_name": "5.jpeg"
+            "img_name": "WhatsApp Image 2021-05-24 at 12.24.09 PM (1).jpeg"
         }
     ],
     "price": [
-        " 500.00"
+        "700"
     ]
 }
