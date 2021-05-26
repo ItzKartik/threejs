@@ -1,10 +1,9 @@
 <?php
 
-$inp;
-$tempArray;
+$inp = file_get_contents('json/main.json');
+$tempArray = json_decode($inp, true);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $inp = file_get_contents('json/main.json');
-  $tempArray = json_decode($inp, true);
   if ($_GET['change'] == "texture") {
     upload_img($_FILES["img_file"], $_GET['texture_type']);
   } else if ($_GET['change'] == "color") {
@@ -25,9 +24,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 function save_json($json){
-  $jsonData = json_encode($json);
-  file_put_contents('json/main.json', $jsonData);
-  header('Location: admin.php');
+  try{
+    $jsonData = json_encode($json);
+    file_put_contents('json/main.json', $jsonData);
+    header('Location: admin.php');
+  }
+  catch(Exception $e){
+    header('Location: admin.php?error='.$e);
+  }
 }
 
 function delete_color($color_name)
@@ -49,6 +53,7 @@ function delete_texture($texture_type, $texture_name)
     $val = $value['img_name'];
     if($val == $texture_name){
       array_splice($tempArray[$texture_type], $key);
+      unlink("tex/".$val);
       save_json($tempArray);
     }
   }
@@ -60,7 +65,7 @@ function upload_img($img_file, $tex_type){
   $check = getimagesize($img_file["tmp_name"]);
   if($check !== false) {
     if (file_exists($target_file)) {
-      echo "Sorry, file already exists.";
+      fill_textures(array("img_name" => $img_file["name"]), $tex_type);
     } else {
       if (move_uploaded_file($img_file["tmp_name"], $target_file)) {
         fill_textures(array("img_name" => $img_file["name"]), $tex_type);
@@ -97,5 +102,3 @@ function fill_price($data)
   $tempArray['price'] = $data;
   save_json($tempArray);
 }
-
-?>

@@ -1,9 +1,7 @@
 function delete_color(ele) {
     var text = $(ele).parent()[0]["innerText"]
     color_name = text.trim();
-    // console.log(window.location.href+"?delete=color&color_name="+color_name);
-    // location.replace(window.location.href+"?delete=color&color_name="+color_name);
-    location.replace("http://localhost/model/admin.php?delete=color&color_name=" + color_name);
+    location.replace("change.php?delete=color&color_name="+color_name);
 }
 
 function delete_texture(ele) {
@@ -12,9 +10,9 @@ function delete_texture(ele) {
     texture_name = texture_name.split('/');
     texture_name = texture_name[texture_name.length - 1]
     if (texture_type.includes("interior_div")) {
-        location.replace("http://localhost/model/admin.php?delete=texture&texture_type=interior&texture_name=" + texture_name)
+        location.replace("change.php?delete=texture&texture_type=interior&texture_name=" + texture_name)
     } else if (texture_type.includes("exterior_div")) {
-        location.replace("http://localhost/model/admin.php?delete=texture&texture_type=exterior&texture_name=" + texture_name)
+        location.replace("change.php?delete=texture&texture_type=exterior&texture_name=" + texture_name)
     } else {
         alert("Some Unknown Error Occured.");
     }
@@ -23,9 +21,7 @@ function delete_texture(ele) {
 function open_it(ele, div_to_show) {
     $('form').hide();
     $('.box_con').hide();
-    $('.opt-btn').each(function (index, element) {
-        $(element).removeClass('ac');
-    });
+    $('.opt-btn').removeClass('ac');
     $(ele).addClass('ac');
     if (div_to_show.includes("price")) {
         $(div_to_show).addClass('animate__animated animate__fadeInUp').show();

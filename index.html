@@ -117,16 +117,17 @@
             </div>
         </div>
     </div>
-    <script src="three/build/three.js"></script>
-    <script src="three/examples/js/loaders/GLTFLoader.js"></script>
+    <!-- <script src="three/build/three.js"></script> -->
+    <script src="https://threejs.org/build/three.js"></script>
+    <script src="https://threejs.org/examples/js/loaders/GLTFLoader.js"></script>
 
 
     <script>
         let clr, light, scene, renderer, camera, controls, object, texture, loader, textureLoader;
     </script>
-    <script type="module" src="index.js"></script>
+    <script type="module" src="js/index.js"></script>
     <script type="module">
-        import { load_obj, change_color } from "./index.js";
+        import { load_obj, change_color } from "js/index.js";
         function change_it(ele) {
             $('.form-check-input').prop('checked', false);
             $(ele).prop('checked', true);
