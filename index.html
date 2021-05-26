@@ -104,7 +104,7 @@
         <br>
         <div class="col-md-12 box_con colors animate__animated animate__fadeInDown" style="display: none;">
             <div class="row color_div">
-                
+
             </div>
         </div>
         <div class="col-md-12 box_con interiors animate__animated animate__fadeInDown" style="display: none;">
@@ -113,7 +113,7 @@
         </div>
         <div class="col-md-12 box_con exteriors animate__animated animate__fadeInDown" style="display: none;">
             <div class="row exterior_div">
-                
+
             </div>
         </div>
     </div>
@@ -131,35 +131,36 @@
             $('.form-check-input').prop('checked', false);
             $(ele).prop('checked', true);
             clr = $(ele).val();
-            if(clr.includes('.')){
+            if (clr.includes('.')) {
                 load_obj(clr);
-            }else if(clr.includes("0x")){
+            } else if (clr.includes("0x")) {
                 change_color(clr);
-            }else{
+            } else {
                 console.log("Not available");
             }
         }
         window.change_it = change_it;
     </script>
     <script>
-        function set_color_divs(data){
-            for(var i = 0; i < data.length; i++){
+        function set_color_divs(data) {
+            for (var i = 0; i < data.length; i++) {
                 var d = (data[i]['hex_code']);
-                $('.color_div').append('<div class="col-md-2"><div class="box text-center mx-auto"><div class="form-check"><input value="'+d+'" onclick="change_it(this)" class="form-check-input" type="radio"></div><br><p>'+data[i]['name']+'</p></div></div>');
+                $('.color_div').append('<div class="col-md-2"><div class="box text-center mx-auto"><div class="form-check"><input value="' + d + '" onclick="change_it(this)" class="form-check-input" type="radio"></div><br><p>' + data[i]['name'] + '</p></div></div>');
             }
         }
-        function set_texture_divs(classname, data){
-            for(var i = 0; i < data.length; i++){
+        function set_texture_divs(classname, data) {
+            for (var i = 0; i < data.length; i++) {
                 var d = data[i]['img_name'];
-                $(classname).append('<div class="col-md-2"><div class="box text-center mx-auto"><img class="text-center mx-auto imgs" src="tex/'+d+'" alt=""><div class="form-check fcs"><input value="'+d+'" onclick="change_it(this)" class="form-check-input" type="radio"></div></div></div>');
+                $(classname).append('<div class="col-md-2"><div class="box text-center mx-auto"><img class="text-center mx-auto imgs" src="tex/' + d + '" alt=""><div class="form-check fcs"><input value="' + d + '" onclick="change_it(this)" class="form-check-input" type="radio"></div></div></div>');
             }
         }
         function setup_json() {
             $.getJSON("json/main.json", function (data) {
                 set_color_divs(data.color);
+                // console.log(data.color);
                 set_texture_divs('.interior_div', data.interior);
                 set_texture_divs('.exterior_div', data.exterior);
-                $('.price_text').html("$"+data.price);
+                $('.price_text').html("$" + data.price);
             }).fail(function () {
                 console.log("An error has occurred.");
             });

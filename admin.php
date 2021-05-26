@@ -1,19 +1,18 @@
 <?php
-// Make something md5
 
-// $password = "38ba0ef529faec6dc4f8bcdba153c9e0";
-// $username = "Hari";
-// if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//   $pword = $_POST['pword'];
-//   $uname = $_POST['uname'];
-//   if (empty($pword) || empty($uname)) {
-//     echo "Name is empty";
-//   } else if ((md5($pword) == $password) and ($uname == $username)) {
-//     echo "Password Matched";
-//   } else {
-//     echo "Failed";  
-//   }
-// }
+$password = "38ba0ef529faec6dc4f8bcdba153c9e0";
+$username = "Hari";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $pword = $_POST['pword'];
+  $uname = $_POST['uname'];
+  if (empty($pword) || empty($uname)) {
+    echo "Name is empty";
+  } else if ((md5($pword) == $password) and ($uname == $username)) {
+    header('Location: '.$_SERVER['PHP_SELF']);
+  } else {
+    echo "Failed";  
+  }
+}
 
 $inp;
 $tempArray;
@@ -27,7 +26,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   } else if ($_GET['change'] == "price") {
     fill_price(array($_POST['price']));
   } else {
-    echo "Failed";
+    echo "Error Post";
+  }
+}else if($_GET['delete']){
+  if ($_GET['delete'] == "color"){
+    delete_color($_GET['color_name']);
+  } else if ($_GET['delete'] == "texture"){
+    delete_texture($_GET['texture_type'], $_GET['texture_name']);
+  }else{
+    echo "Error GET";
+  }
+}
+
+function save_json($json){
+  $jsonData = json_encode($json);
+  file_put_contents('json/main.json', $jsonData);
+}
+
+function delete_color($color_name)
+{
+  global $tempArray;
+  foreach($tempArray['color'] as $key => $value) {
+    $val = $value['name'];
+    if($val == $color_name){
+      array_splice($tempArray['color'], $key) ;
+      save_json($tempArray);
+    }
+  }
+}
+
+function delete_texture($texture_type, $texture_name)
+{
+  global $tempArray;
+  foreach($tempArray[$texture_type] as $key => $value) {
+    $val = $value['img_name'];
+    if($val == $texture_name){
+      array_splice($tempArray[$texture_type], $key);
+      save_json($tempArray);
+    }
   }
 }
 
@@ -54,8 +90,7 @@ function fill_color($data)
 {
   global $tempArray;
   array_push($tempArray["color"], $data);
-  $jsonData = json_encode($tempArray);
-  file_put_contents('json/main.json', $jsonData);
+  save_json($tempArray);
 }
 
 function fill_textures($data, $tex_type)
@@ -66,16 +101,14 @@ function fill_textures($data, $tex_type)
   } else {
     array_push($tempArray["exterior"], $data);
   }
-  $jsonData = json_encode($tempArray);
-  file_put_contents('json/main.json', $jsonData);
+  save_json($tempArray);
 }
 
 function fill_price($data)
 {
   global $tempArray;
   $tempArray['price'] = $data;
-  $jsonData = json_encode($tempArray);
-  file_put_contents('json/main.json', $jsonData);
+  save_json($tempArray);
 }
 
 ?>
