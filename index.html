@@ -14,7 +14,23 @@
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+        .owl-dots{
+            display: none !important;
+        }
+        .owl-next > span, .owl-prev > span{
+            padding: 0px 20px 0px 20px;
+            font-size: 3rem;
+            font-weight: 900;
+        }
+        .owl-next:focus, .owl-prev:focus, .owl-next:hover, .owl-prev:hover{
+            color: black !important;
+            border: none !important;
+            outline: none !important;
+            background-color: transparent !important;
+        }
         body,
         html {
             overflow-x: hidden !important;
@@ -77,17 +93,37 @@
             font-size: 2rem;
             font-weight: 800;
         }
+        .sizes{
+            border-bottom: 2px solid black;
+            border-radius:30px;
+            cursor: pointer;
+            padding: 10px;
+            color: rgb(0, 0, 0);
+        }
+        .sizes:hover{
+            transition: 0.3s;
+            color: white !important;
+            background-color: rgb(0, 0, 0);
+        }
     </style>
 </head>
 
 <body>
     <div class="col-md-12">
         <div class="price_box text-center mx-auto">
-            <p class="price_text">$400.00</p>
+            <p class="price_text">$000.00</p>
         </div>
     </div>
-    <div class="con col-md-12" style="height: 300vh;">
-        <div class="row">
+    <div class="con" style="width: 100%; height: 300vh;">
+        <div class="first_slider">
+            <div class="owl-carousel owl-theme">
+                <div onclick="change_modal_height('110SF');" class="sizes mx-auto text-center item">110SF</div>
+                <div onclick="alert('Work in progress...');" class="sizes mx-auto text-center item">143SF</div>
+                <div onclick="change_modal_height('default');" class="sizes mx-auto text-center item">Default</div>
+                <div onclick="alert('Work in progress...');" class="sizes mx-auto text-center item">277 SF</div>
+            </div>
+        </div>
+        <div class="row" style="display: none;">
             <div class="col-md-1 btns">
                 <button onclick="$('.box_con').hide(); $('.colors').show();"
                     class="btn btn-outline-dark">Colors</button>
@@ -120,10 +156,27 @@
     <!-- <script src="three/build/three.js"></script> -->
     <script src="https://threejs.org/build/three.js"></script>
     <script src="https://threejs.org/examples/js/loaders/GLTFLoader.js"></script>
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        let clr, light, scene, renderer, camera, controls, object, texture, loader, textureLoader;
+        var owl = $(".owl-carousel")
+        owl.owlCarousel({
+            margin:10,
+            nav:true,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:1
+                },
+                1000:{
+                    items:4
+                }
+            }
+        });
+    </script>
+    <script>
+        let clr, light, scene, renderer, camera, controls, object, texture, loader, textureLoader, S110F_objs, default_objs;
     </script>
     <script type="module" src="js/index.js"></script>
     <script type="module">
@@ -140,6 +193,14 @@
                 console.log("Not available");
             }
         }
+        function change_modal_height(height){
+            if(height == '110SF'){
+                load_obj(S110F_objs, 'objs/110SF/', '5.jpeg');
+            }else{
+                load_obj(default_objs, 'objs/default/', '5.jpeg');
+            }
+        }
+        window.change_modal_height = change_modal_height;
         window.change_it = change_it;
     </script>
     <script>
