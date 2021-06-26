@@ -123,7 +123,7 @@
                 <div onclick="alert('Work in progress...');" class="sizes mx-auto text-center item">277 SF</div>
             </div>
         </div>
-        <div class="row" style="display: none;">
+        <div class="row">
             <div class="col-md-1 btns">
                 <button onclick="$('.box_con').hide(); $('.colors').show();"
                     class="btn btn-outline-dark">Colors</button>
@@ -176,19 +176,22 @@
         });
     </script>
     <script>
-        let clr, light, scene, renderer, camera, controls, object, texture, loader, textureLoader, S110F_objs, default_objs;
+        let clr, light, scene, renderer, camera, controls, texture, loader, textureLoader, S110F_objs, default_objs;
+        let obj_in1, obj_in5, obj_in4, obj_in2, obj_in3,  obj_out1, obj_out2, obj_out3,  obj_out4, vars;
     </script>
     <script type="module" src="js/index.js"></script>
     <script type="module">
-        import { load_obj, change_color } from "./js/index.js";
+        import { load_obj, change_tex } from "./js/index.js";
         function change_it(ele) {
             $('.form-check-input').prop('checked', false);
             $(ele).prop('checked', true);
             clr = $(ele).val();
-            if (clr.includes('.')) {
-                load_obj(clr);
-            } else if (clr.includes("0x")) {
-                change_color(clr);
+            if ($(ele).hasClass('interior_type')) {
+                change_tex(clr, 'interior');
+            }else if ($(ele).hasClass('exterior_type')) {
+                change_tex(clr, 'exterior');
+            } else if ($(ele).hasClass('color_type')) {
+                change_tex(clr, 'color');
             } else {
                 console.log("Not available");
             }
@@ -207,21 +210,26 @@
         function set_color_divs(data) {
             for (var i = 0; i < data.length; i++) {
                 var d = (data[i]['hex_code']);
-                $('.color_div').append('<div class="col-md-2"><div class="box text-center mx-auto"><div class="form-check"><input value="' + d + '" onclick="change_it(this)" class="form-check-input" type="radio"></div><br><p>' + data[i]['name'] + '</p></div></div>');
+                $('.color_div').append('<div class="col-md-2"><div class="box text-center mx-auto"><div class="form-check"><input value="' + d + '" onclick="change_it(this)" class="color_type form-check-input" type="radio"></div><br><p>' + data[i]['name'] + '</p></div></div>');
             }
         }
-        function set_texture_divs(classname, data) {
+        function set_interior_divs(classname, data) {
             for (var i = 0; i < data.length; i++) {
                 var d = data[i]['img_name'];
-                $(classname).append('<div class="col-md-2"><div class="box text-center mx-auto"><img class="text-center mx-auto imgs" src="tex/' + d + '" alt=""><div class="form-check fcs"><input value="' + d + '" onclick="change_it(this)" class="form-check-input" type="radio"></div></div></div>');
+                $(classname).append('<div class="col-md-2"><div class="box text-center mx-auto"><img class="text-center mx-auto imgs" src="tex/' + d + '" alt=""><div class="form-check fcs"><input value="' + d + '" onclick="change_it(this)" class="interior_type form-check-input" type="radio"></div></div></div>');
+            }
+        }
+        function set_exterior_divs(classname, data) {
+            for (var i = 0; i < data.length; i++) {
+                var d = data[i]['img_name'];
+                $(classname).append('<div class="col-md-2"><div class="box text-center mx-auto"><img class="text-center mx-auto imgs" src="tex/' + d + '" alt=""><div class="form-check fcs"><input value="' + d + '" onclick="change_it(this)" class="exterior_type form-check-input" type="radio"></div></div></div>');
             }
         }
         function setup_json() {
             $.getJSON("json/main.json", function (data) {
                 set_color_divs(data.color);
-                // console.log(data.color);
-                set_texture_divs('.interior_div', data.interior);
-                set_texture_divs('.exterior_div', data.exterior);
+                set_interior_divs('.interior_div', data.interior);
+                set_exterior_divs('.exterior_div', data.exterior);
                 $('.price_text').html("$" + data.price);
             }).fail(function () {
                 console.log("An error has occurred.");
