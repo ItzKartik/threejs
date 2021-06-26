@@ -13,6 +13,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -65,6 +66,7 @@
         }
 
         .btns {
+            padding-top: 30px;
             padding-bottom: 5px;
         }
 
@@ -94,8 +96,8 @@
             font-weight: 800;
         }
         .sizes{
-            border-bottom: 2px solid black;
-            border-radius:30px;
+            /* border-bottom: 2px solid black; */
+            /* border-radius:0px; */
             cursor: pointer;
             padding: 10px;
             color: rgb(0, 0, 0);
@@ -104,6 +106,36 @@
             transition: 0.3s;
             color: white !important;
             background-color: rgb(0, 0, 0);
+        }
+        .owl-theme .owl-nav [class*=owl-]{
+            background: none !important;
+            color: black;
+            font-size: 2rem;
+        }
+        .first_slider > .owl1 > .owl-nav{
+            margin-top: -50px;
+        }
+        .owl1 > .owl-nav > .owl-prev{
+            position: absolute;
+            left: 0;
+        }
+        .owl1 > .owl-nav > .owl-next{
+            position: absolute;
+            right: 0;
+        }
+        .option_slider{
+            padding-top: 0px;
+        }
+        .owl2 > .owl-nav{
+            margin-top: -50px;
+        }
+        .owl2 > .owl-nav > .owl-prev{
+            position: absolute;
+            left: 0;
+        }
+        .owl2 > .owl-nav > .owl-next{
+            position: absolute;
+            right: 0;
         }
     </style>
 </head>
@@ -114,40 +146,33 @@
             <p class="price_text">$000.00</p>
         </div>
     </div>
-    <div class="con" style="width: 100%; height: 300vh;">
-        <div class="first_slider">
-            <div class="owl-carousel owl-theme">
-                <div onclick="change_modal_height('110SF');" class="sizes mx-auto text-center item">110SF</div>
-                <div onclick="alert('Work in progress...');" class="sizes mx-auto text-center item">143SF</div>
-                <div onclick="change_modal_height('default');" class="sizes mx-auto text-center item">Default</div>
-                <div onclick="alert('Work in progress...');" class="sizes mx-auto text-center item">277 SF</div>
+    <div class="con col-md-12 text-center mx-auto" style="width: 100%; height: 300vh;">
+        <!-- <div class="first_slider">
+            <div class="owl-carousel owl1 owl-theme">
+                <button onclick="change_modal_height('110SF');" class="btn btn-outline-dark">110 SF</button>
+                <button onclick="alert('In Pogress');l" class="btn btn-outline-dark">143 SF</button>
+                <button onclick="change_modal_height('default');" class="btn btn-outline-dark">Default</button>
+                <button onclick="alert('In Pogress');" class="btn btn-outline-dark">277 SF</button>
+            </div>
+        </div> -->
+        <div class="option_slider" style="margin-top: 30px;">
+            <div class="owl-carousel owl2 owl-theme">
+                <div class="item"><button onclick="$('.box_con').hide(); $('.colors').show();" class="form-control btn btn-light">Colors</button></div>
+                <div class="item"><button onclick="$('.box_con').hide(); $('.interiors').show();" class="form-control btn btn-light">Interior</button></div>
+                <div class="item"><button onclick="$('.box_con').hide(); $('.exteriors').show();" class="form-control btn btn-light">Exterior</button></div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-1 btns">
-                <button onclick="$('.box_con').hide(); $('.colors').show();"
-                    class="btn btn-outline-dark">Colors</button>
-            </div>
-            <div class="col-md-1 btns">
-                <button onclick="$('.box_con').hide(); $('.interiors').show();"
-                    class="btn btn-outline-dark">Interior</button>
-            </div>
-            <div class="col-md-1 btns">
-                <button onclick="$('.box_con').hide(); $('.exteriors').show();"
-                    class="btn btn-outline-dark">Exterior</button>
-            </div>
-        </div>
-        <br>
-        <div class="col-md-12 box_con colors animate__animated animate__fadeInDown" style="display: none;">
+        <br><br><br>
+        <div class="col-md-12 mx-auto text-center box_con colors animate__animated animate__fadeInUp" style="display: none;">
             <div class="row color_div">
 
             </div>
         </div>
-        <div class="col-md-12 box_con interiors animate__animated animate__fadeInDown" style="display: none;">
+        <div class="col-md-12 mx-auto text-center box_con interiors animate__animated animate__fadeInUp" style="display: none;">
             <div class="row interior_div">
             </div>
         </div>
-        <div class="col-md-12 box_con exteriors animate__animated animate__fadeInDown" style="display: none;">
+        <div class="col-md-12 mx-auto text-center box_con exteriors animate__animated animate__fadeInUp" style="display: none;">
             <div class="row exterior_div">
 
             </div>
@@ -158,7 +183,7 @@
     <script src="https://threejs.org/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        var owl = $(".owl-carousel")
+        var owl = $(".owl1")
         owl.owlCarousel({
             margin:10,
             nav:true,
@@ -174,6 +199,26 @@
                 }
             }
         });
+        var owl2 = $(".owl2")
+        owl2.owlCarousel({
+            margin:10,
+            nav:true,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:1
+                },
+                1000:{
+                    items:3
+                }
+            }
+        });
+        $('.owl-prev').html('');
+        $('.owl-prev').html('<i class="owl-prev fas fa-chevron-circle-left"></i>');
+        $('.owl-next').html('');
+        $('.owl-next').html('<i class="owl-next fas fa-chevron-circle-right"></i>');
     </script>
     <script>
         let clr, light, scene, renderer, camera, controls, texture, loader, textureLoader, S110F_objs, default_objs;
@@ -210,19 +255,19 @@
         function set_color_divs(data) {
             for (var i = 0; i < data.length; i++) {
                 var d = (data[i]['hex_code']);
-                $('.color_div').append('<div class="col-md-2"><div class="box text-center mx-auto"><div class="form-check"><input value="' + d + '" onclick="change_it(this)" class="color_type form-check-input" type="radio"></div><br><p>' + data[i]['name'] + '</p></div></div>');
+                $('.color_div').append('<div class="col-md-2 mx-auto text-center"><div class="box text-center mx-auto"><div class="form-check"><input value="' + d + '" onclick="change_it(this)" class="color_type form-check-input" type="radio"></div><br><p>' + data[i]['name'] + '</p></div></div>');
             }
         }
         function set_interior_divs(classname, data) {
             for (var i = 0; i < data.length; i++) {
                 var d = data[i]['img_name'];
-                $(classname).append('<div class="col-md-2"><div class="box text-center mx-auto"><img class="text-center mx-auto imgs" src="tex/' + d + '" alt=""><div class="form-check fcs"><input value="' + d + '" onclick="change_it(this)" class="interior_type form-check-input" type="radio"></div></div></div>');
+                $(classname).append('<div class="col-md-2 mx-auto text-center"><div class="box text-center mx-auto"><img class="text-center mx-auto imgs" src="tex/' + d + '" alt=""><div class="form-check fcs"><input value="' + d + '" onclick="change_it(this)" class="interior_type form-check-input" type="radio"></div></div></div>');
             }
         }
         function set_exterior_divs(classname, data) {
             for (var i = 0; i < data.length; i++) {
                 var d = data[i]['img_name'];
-                $(classname).append('<div class="col-md-2"><div class="box text-center mx-auto"><img class="text-center mx-auto imgs" src="tex/' + d + '" alt=""><div class="form-check fcs"><input value="' + d + '" onclick="change_it(this)" class="exterior_type form-check-input" type="radio"></div></div></div>');
+                $(classname).append('<div class="col-md-2 mx-auto text-center"><div class="box text-center mx-auto"><img class="text-center mx-auto imgs" src="tex/' + d + '" alt=""><div class="form-check fcs"><input value="' + d + '" onclick="change_it(this)" class="exterior_type form-check-input" type="radio"></div></div></div>');
             }
         }
         function setup_json() {
