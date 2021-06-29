@@ -48,7 +48,7 @@
 
         .con {
             padding: 20px;
-            background-color: #f5f5f5;
+            background-color: transparent;
             position: absolute;
             top: 70%;
         }
@@ -141,6 +141,7 @@
 </head>
 
 <body>
+    <!-- <iframe src="https://p3d.in/lv3vj" height="1000" style="width: 100%" title="Iframe Example"></iframe> -->
     <div class="col-md-12">
         <div class="price_box text-center mx-auto">
             <p class="price_text">$000.00</p>
@@ -180,7 +181,9 @@
     </div>
     <!-- <script src="three/build/three.js"></script> -->
     <script src="https://threejs.org/build/three.js"></script>
-    <script src="https://threejs.org/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://threejs.org/examples/js/loaders/OBJLoader.js"></script>
+    <!-- <script src="https://threejs.org/examples/jsm/loaders/MTLLoader.js"></script> -->
+    <!-- <script src="https://threejs.org/examples/js/loaders/GLTFLoader.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         var owl = $(".owl1")
@@ -221,7 +224,7 @@
         $('.owl-next').html('<i class="owl-next fas fa-chevron-circle-right"></i>');
     </script>
     <script>
-        let clr, light, scene, renderer, camera, controls, texture, loader, textureLoader, S110F_objs, default_objs;
+        let clr, light, scene, renderer, camera, controls, texture, textureLoader, S110F_objs, default_objs;
         let obj_in1, obj_in5, obj_in4, obj_in2, obj_in3,  obj_out1, obj_out2, obj_out3,  obj_out4, vars;
     </script>
     <script type="module" src="js/index.js"></script>

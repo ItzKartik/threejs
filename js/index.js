@@ -1,4 +1,5 @@
 import { OrbitControls } from "https://threejs.org/examples/jsm/controls/OrbitControls.js";
+import { MTLLoader } from 'https://threejs.org/examples/jsm/loaders/MTLLoader.js';
 
 default_objs = ['MW_1.glb', 'MF_1.glb', 'MH_1.glb', 'MW_2.glb', 'MH_2.glb', 'MH_1 (Exterior Skin).glb', 'MH_2 (Exterior Skin).glb', 'MW_1 (Exterior Skin).glb', 'MW_2 (Exterior Skin).glb'];
 S110F_objs = ['MF_1.glb', 'MR_1Copy1.glb', 'MW_1_exteriorskin.glb', 'MW_1.glb', 'MW_2_exteriorskin.glb', 'MW_2.glb', 'MW_3_exteriorskin.glb', 'MW_3.glb', 'MW_4_exteriorskin.glb', 'MW_4.glb']
@@ -8,10 +9,10 @@ function init() {
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0xffffff);
 
-    camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 10, 1800);
-    camera.position.z = 100;
-    camera.position.y = 20;
-    camera.position.x = -180;
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 800);
+    camera.position.z = -200;
+    camera.position.y = 0;
+    camera.position.x = 0;
 
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -23,20 +24,27 @@ function init() {
     controls = new OrbitControls(camera, renderer.domElement);
 
     controls.rotateSpeed = 0.5;
-    controls.zoomSpeed = 0.9;
+    controls.zoomSpeed = 5;
 
     controls.minPolarAngle = 0;
     controls.maxPolarAngle = Math.PI / 2;
 
     controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
+    // controls.dampingFactor = 0.05;
 
     var hemiLight = new THREE.HemisphereLight(0xffeeb1, 0x080820, 2);
     scene.add(hemiLight);
-    light = new THREE.SpotLight(0xffa95c, 0.2);
-    light.position.set(-50, 50, 50);
-    light.castShadow = true;
-    scene.add(light);
+    // light = new THREE.SpotLight(0xffa95c, 0.2);
+    // light.position.set(-50, 50, 50);
+    // light.castShadow = true;
+    // scene.add(light);
+
+    // var hemiLight = new THREE.HemisphereLight(0xffeeb1, 0x080820, 2);
+    // scene.add(hemiLight);
+    // light = new THREE.SpotLight(0xffa95c, 0.2);
+    // light.position.set(-50, 50, 50);
+    // light.castShadow = true;
+    // scene.add(light);
 
     // light = new THREE.PointLight(0xffffcc, 10, 200);
     // light.position.set(0, 150, 0);
@@ -53,10 +61,56 @@ function init() {
     // light3.castShadow = true;
     // scene.add(light3);
 
-    loader = new THREE.GLTFLoader();
-    loader.crossOrigin = true;
+    const loader = new THREE.OBJLoader();
+    // const materialsLoader = new THREE.MTLLoader();
+    // loader.crossOrigin = true;
+    var mtlLoader = new MTLLoader();
+    mtlLoader.load("b/110.mtl", function (materials) {
+        materials.preload();
+        var objLoader = new THREE.OBJLoader();
+        objLoader.setMaterials(materials);
+        objLoader.load("b/110.obj", function (object) {
 
-    load_obj(default_objs, 'objs/default/');
+            object.scale.x = 20;
+            object.scale.y = 20;
+            object.scale.z = 20;
+            object.rotation.x = Math.PI;
+            object.rotation.y = Math.PI;
+            object.rotation.z = Math.PI;
+
+            scene.add(object);
+
+        });
+    });
+    // loader.load(
+    //     // resource URL
+    //     'objs/1.obj',
+    //     // called when resource is loaded
+    //     function ( object ) {
+    //         var object = object.content;
+    //         materialsLoader.load('objs/1.mtl', function (materialsCreator) {
+    //             loader.setMaterials(materialsCreator);
+    //             loader.load('objs/1.obj', function (obj) {
+    //                 object = obj;
+    //             });
+    //         });
+    //         scene.add( object );
+    //     },
+
+    //     function ( xhr ) {
+
+    //         console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+    //     },
+
+    //     function ( error ) {
+
+    //         console.log( 'An error happened' );
+
+    //     }
+    // );
+
+    // load_obj('1.obj', 'objs/');
 
     render();
 
@@ -82,16 +136,14 @@ function resizeRendererToDisplaySize(renderer) {
 }
 
 export function load_obj(obj, type) {
-    for (var i = 0; i < obj.length; i++) {
-        loader.load(type + obj[i], function (data) {
-            vars[i] = data.scene;
-            vars[i].scale.set(2, 2, 2);
-            vars[i].rotation.x = Math.PI / 2;
-            vars[i].rotation.y = Math.PI;
-            vars[i].rotation.z = Math.PI / 2;
-            scene.add(vars[i]);
-        });
-    }
+    loader.load('objs/1.obj', function (data) {
+        vars[0] = data.scene;
+        vars[0].scale.set(2, 2, 2);
+        vars[0].rotation.x = Math.PI / 2;
+        vars[0].rotation.y = Math.PI;
+        vars[0].rotation.z = Math.PI / 2;
+        scene.add(vars[0]);
+    });
 }
 
 export function change_tex(tex, type) {
@@ -114,7 +166,7 @@ export function change_tex(tex, type) {
                 scene.add(vars[i]);
             });
         }
-    } else if(type == 'exterior') {
+    } else if (type == 'exterior') {
         for (var i = 5; i < 9; i++) {
             vars[i] = null;
             loader.load('objs/default/' + default_objs[i], function (data) {
@@ -131,7 +183,7 @@ export function change_tex(tex, type) {
                 scene.add(vars[i]);
             });
         }
-    } else if(type == 'color') {
+    } else if (type == 'color') {
         for (var i = 0; i < default_objs.length; i++) {
             vars[i] = null;
             loader.load('objs/default/' + default_objs[i], function (data) {
